@@ -1,0 +1,11 @@
+.card__header.override{
+  border-bottom: none;
+}
+.card.card__header.override *>h1{
+  font-weight: 600;
+  font-size: 1.6rem;
+}
+
+.button.override {
+  font-weight: 600;
+}

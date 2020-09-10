@@ -1,3 +1,7 @@
-img{
+.contact__avatar.override{
   background-color: #E4BDFF;
+}
+
+.button.override {
+  font-weight: 600;
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {img} from "./ContactsList.module.css";
+import styles from "./ContactsList.module.css";
 import avatar1 from "./../../statics/avatar-1.png";
 import avatar2 from "./../../statics/avatar-2.png";
 import SearchBar from "./../SearchBar/SearchBar";
@@ -16,7 +16,7 @@ import {
 const ContactsList = props => {
   const pageHead = (
     <PageHead title="Contacts">
-      <Button type="primary">Add Contacts</Button>
+      <Button type="primary" className={[styles.button, styles.override]}>Add Contacts</Button>
     </PageHead>
   );
 
@@ -31,7 +31,7 @@ const ContactsList = props => {
   const tableData = [
     {
       id: 1,
-      avatar: (displayAvatar("Chaya Philip", {img}, avatar1)),
+      avatar: (displayAvatar("Chaya Philip", [styles.contact__avatar, styles.override], avatar1)),
       firstName: "Chaya",
       lastName: "Philip",
       company: "Trescothik and Co",
@@ -40,7 +40,7 @@ const ContactsList = props => {
     },
     {
       id: 2,
-      avatar: (displayAvatar("Gregory Hill", {img}, avatar2)),
+      avatar: (displayAvatar("Gregory Hill", [styles.contact__avatar, styles.override], avatar2)),
       firstName: "Gregory",
       lastName: "Hill",
       company: "Torrance Brothers",
@@ -49,7 +49,7 @@ const ContactsList = props => {
     },
     {
       id: 3,
-      avatar: (displayAvatar("Jamie Mcnally", {img})),
+      avatar: (displayAvatar("Jamie Mcnally", [styles.contact__avatar, styles.override])),
       firstName: "Jamie",
       lastName: "Mcnally",
       company: "Chloe Associates",
