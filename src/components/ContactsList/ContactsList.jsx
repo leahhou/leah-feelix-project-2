@@ -10,28 +10,35 @@ import {
   StandardTemplate,
   Button,
   Table,
-  PageHead
+  PageHead,
+  HeaderSort
 } from "@myob/myob-widgets";
 
 const ContactsList = props => {
   const pageHead = (
     <PageHead title="Contacts">
-      <Button type="primary" className={[styles.button, styles.override]}>Add Contacts</Button>
+      <Button type="primary" className={[styles.button, styles.override]}>
+        Add Contacts
+      </Button>
     </PageHead>
   );
 
-  const displayAvatar = (name, customStyle,image=null) => {
-    return image ?  <UserAvatar
-    name={name}
-    imageSource={image}
-    className={customStyle} 
-  /> :   <Avatar type='user' color='regal' name={name} />
-  }
+  const displayAvatar = (name, customStyle, image = null) => {
+    return image ? (
+      <UserAvatar name={name} imageSource={image} className={customStyle} />
+    ) : (
+      <Avatar type="user" color="regal" name={name} />
+    );
+  };
 
   const tableData = [
     {
       id: 1,
-      avatar: (displayAvatar("Chaya Philip", [styles.contact__avatar, styles.override], avatar1)),
+      avatar: displayAvatar(
+        "Chaya Philip",
+        [styles.contact__avatar, styles.override],
+        avatar1
+      ),
       firstName: "Chaya",
       lastName: "Philip",
       company: "Trescothik and Co",
@@ -40,7 +47,11 @@ const ContactsList = props => {
     },
     {
       id: 2,
-      avatar: (displayAvatar("Gregory Hill", [styles.contact__avatar, styles.override], avatar2)),
+      avatar: displayAvatar(
+        "Gregory Hill",
+        [styles.contact__avatar, styles.override],
+        avatar2
+      ),
       firstName: "Gregory",
       lastName: "Hill",
       company: "Torrance Brothers",
@@ -49,7 +60,10 @@ const ContactsList = props => {
     },
     {
       id: 3,
-      avatar: (displayAvatar("Jamie Mcnally", [styles.contact__avatar, styles.override])),
+      avatar: displayAvatar("Jamie Mcnally", [
+        styles.contact__avatar,
+        styles.override
+      ]),
       firstName: "Jamie",
       lastName: "Mcnally",
       company: "Chloe Associates",
@@ -67,9 +81,92 @@ const ContactsList = props => {
     { key: "phone", description: "Phone", visible: true }
   ];
 
+  const stringCompare = (a, b) => {
+    debugger;
+    const nameA = a.toUpperCase();
+    const nameB = b.toUpperCase();
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+    return 0;
+  };
+
+  const applySort = (data, sortFn, isDescending) => {
+    const result = data.slice(); //copy the data into new variable
+    debugger;
+    result.sort(sortFn);
+    debugger;
+    //default sort order is ascending if no function is passed as param
+    //sortFn: give a specific sorting logic
+    return isDescending ? result.reverse() : result;
+  };
+
+  const onSort = column => {
+    //activeSort is the shape of arrow icon shown next to column can be sorted.
+    const nextSortOrder = !activeSort.descending; //I supposed descending is a bool, why can't I name it isDescending!!!
+    setActiveSort({ column, descending: nextSortOrder }); //column is also not a good name after reading the Docs
+    //sort the tableData by certain column given the shape of arrow icon shown next to the column name
+    debugger;
+    setData(applySort(tableData, sort[column], nextSortOrder));
+  };
+
+  const [activeSort, setActiveSort] = React.useState({});
+  const [sort] = React.useState({
+    firstName: (a, b) => stringCompare(a.firstName, b.firstNname),
+    lastName: (a, b) => stringCompare(a.lastName, b.lastName)
+  });
+  const [data, setData] = React.useState(tableData);
+  const [columns] = React.useState(tableColumns);
+
+  // const adjustHeaderWidth = (columnKey) => {
+  //   if (columnKey === "avatar")
+  // }
+
+  const renderHeader = () => (
+    <Table.Header>
+      {columns.map(c => (
+        <Table.HeaderItem key={c.key} textWrap="nowrap" >
+          {sort[c.key] ? (
+            <HeaderSort
+              title={c.description}
+              sortName={c.key}
+              activeSort={activeSort}
+              onSort={onSort}
+              altText={c.description}
+            />
+          ) : (
+            c.description
+          )}
+        </Table.HeaderItem>
+      ))}
+    </Table.Header>
+  );
+
+  const renderRow = d => (
+    <Table.Row key={d.id}>
+      <Table.RowItem columnName="avatar">{d.avatar}</Table.RowItem>
+      <Table.RowItem columnName="firstName">{d.firstName}</Table.RowItem>
+      <Table.RowItem columnName="lastName">{d.lastName}</Table.RowItem>
+      <Table.RowItem columnName="company">{d.company}</Table.RowItem>
+      <Table.RowItem title={d.email} columnName="email">
+        <a href={`mailto:${d.email}"`}>{d.email}</a>
+      </Table.RowItem>
+      <Table.RowItem columnName="phone">
+        <a href={`tel:${d.phone}"`}>{d.phone}</a>
+      </Table.RowItem>
+    </Table.Row>
+  );
+
   return (
     <StandardTemplate pageHead={pageHead} filterBar={<SearchBar></SearchBar>}>
-      <Table data={tableData} columns={tableColumns} />
+      {/* <Table data={tableData} columns={tableColumns} /> */}
+      <Table>
+        {renderHeader()}
+        <Table.Body>{data.map(renderRow)}</Table.Body>
+      </Table>
     </StandardTemplate>
   );
 };
