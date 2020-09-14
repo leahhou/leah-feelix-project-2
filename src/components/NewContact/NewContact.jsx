@@ -36,28 +36,29 @@ const NewContact = props => {
 
   const pageFooter = (
     <>
-      <Button
-        type="secondary"
-        className={[styles.button, styles.override]}
-        onClick={() => "clicked"}
-      >
-        Delete
-      </Button>
-      <ButtonRow>
-        <Button
-          type="secondary"
-          className={[styles.button, styles.override]}
-          onClick={() => "clicked"}
-        >
-          Cancel
-        </Button>
-        <Button
-          className={[styles.button, styles.override]}
-          onClick={() => "clicked"}
-        >
-          Save
-        </Button>
-      </ButtonRow>
+      <ButtonRow
+        secondary={[
+          <Button
+            key="secondary-1"
+            type="secondary"
+            className={[styles.button, styles.override]}
+          >
+            Delete
+          </Button>
+        ]}
+        primary={[
+          <Button
+            key="primary-1"
+            type="secondary"
+            className={[styles.button, styles.override]}
+          >
+            Cancel
+          </Button>,
+          <Button key="primary-2" className={[styles.button, styles.override]}>
+            Save
+          </Button>
+        ]}
+      />
     </>
   );
   return (
@@ -75,7 +76,7 @@ const NewContact = props => {
         <Card
           header={
             <Card.Header
-              classes={[styles.card,styles.card__header, styles.override]}
+              classes={[styles.card, styles.card__header, styles.override]}
               child={<MockCardHeader />}
             />
           }
