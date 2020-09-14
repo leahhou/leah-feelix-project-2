@@ -5,7 +5,7 @@ import { Navigation, MYOBLogo } from "@myob/myob-widgets";
 
 const NavBar = props => {
   const brand = (
-    <Navigation.Brand url="/home" width="73px">
+    <Navigation.Brand url="/" width="73px">
       <MYOBLogo />
     </Navigation.Brand>
   );
