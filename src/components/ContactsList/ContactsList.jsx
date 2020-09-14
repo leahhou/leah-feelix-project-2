@@ -13,6 +13,7 @@ import {
   Table,
   HeaderSort
 } from "@myob/myob-widgets";
+import { Link } from "react-router-dom";
 
 const ContactsList = () => {
   const displayAvatar = (name, customStyle, image = null) => {
@@ -153,12 +154,19 @@ const ContactsList = () => {
     setData(filtedData);
   };
 
-
   const pageHead = (
     <PageHead title="Contacts">
-      <Button type="primary" className={`${styles.button} ${styles.override}`}>
+      <Link exact to="/new">
+        <Button
+          type="primary"
+          className={`${styles.button} ${styles.override}`}
+        >
+          Add Contacts
+        </Button>
+      </Link>
+      {/* <Button type="primary" className={`${styles.button} ${styles.override}`}>
         Add Contacts
-      </Button>
+      </Button> */}
     </PageHead>
   );
 

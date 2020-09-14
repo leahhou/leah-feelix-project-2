@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "./NewContact.module.css";
+import { Link } from "react-router-dom";
 import {
   FormTemplate,
   FormHorizontal,
@@ -38,25 +39,34 @@ const NewContact = props => {
     <>
       <ButtonRow
         secondary={[
-          <Button
-            key="secondary-1"
-            type="secondary"
-            className={[styles.button, styles.override]}
-          >
-            Delete
-          </Button>
+          <Link exact to="/">
+            <Button
+              key="secondary-1"
+              type="secondary"
+              className={[styles.button, styles.override]}
+            >
+              Delete
+            </Button>
+          </Link>
         ]}
         primary={[
-          <Button
-            key="primary-1"
-            type="secondary"
-            className={[styles.button, styles.override]}
-          >
-            Cancel
-          </Button>,
-          <Button key="primary-2" className={[styles.button, styles.override]}>
-            Save
-          </Button>
+          <Link exact to="/">
+            <Button
+              key="primary-1"
+              type="secondary"
+              className={`${styles.button} ${styles.override}`}
+            >
+              Cancel
+            </Button>
+          </Link>,
+          <Link exact to="/">
+            <Button
+              key="primary-2"
+              className={`${styles.button} ${styles.override}`}
+            >
+              Save
+            </Button>
+          </Link>
         ]}
       />
     </>
