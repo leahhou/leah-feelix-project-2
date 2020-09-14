@@ -77,7 +77,7 @@ const ContactsList = props => {
     { key: "firstName", description: "First Name", visible: true },
     { key: "lastName", description: "Last Name", visible: true },
     { key: "company", description: "Company", visible: true },
-    { key: "email", description: "Email", visible:true },
+    { key: "email", description: "Email", visible: true },
     { key: "phone", description: "Phone", visible: true }
   ];
 
@@ -113,13 +113,29 @@ const ContactsList = props => {
     setData(applySort(tableData, sort[column], nextSortOrder));
   };
 
+  const [filterText, setFilterText] = React.useState("");
+  const handleFilterChange = filterInput => {
+    setFilterText(filterInput);
+  };
+  const filterContacts = list => {
+    const filtered = [];
+    list.forEach(contact => {
+      const filterContact = contact.firstName.toLowerCase();
+      if (filterContact.indexOf(this.state.filterText) === -1) {
+        return;
+      }
+      filtered.push(contact);
+    });
+    return filtered;
+  };
+
   const [activeSort, setActiveSort] = React.useState({});
+  const [data, setData] = React.useState(tableData);
+  const [columns] = React.useState(tableColumns);
   const [sort] = React.useState({
     firstName: (a, b) => stringCompare(a.firstName, b.firstNname),
     lastName: (a, b) => stringCompare(a.lastName, b.lastName)
   });
-  const [data, setData] = React.useState(tableData);
-  const [columns] = React.useState(tableColumns);
 
   const customiseTableWidth = (columnKey = null) => {
     if (columnKey === "avatar") {
@@ -134,7 +150,11 @@ const ContactsList = props => {
   const renderHeader = () => (
     <Table.Header>
       {columns.map(c => (
-        <Table.HeaderItem key={c.key} width={customiseTableWidth(c.key)} className={c.key==="avatar"? [styles.table__cell__avatar] : null}>
+        <Table.HeaderItem
+          key={c.key}
+          width={customiseTableWidth(c.key)}
+          className={c.key === "avatar" ? [styles.table__cell__avatar] : null}
+        >
           {sort[c.key] ? (
             <HeaderSort
               title={c.description}
@@ -153,13 +173,27 @@ const ContactsList = props => {
 
   const renderRow = d => (
     <Table.Row key={d.id}>
-      <Table.RowItem columnName="Avatar" width={customiseTableWidth("avatar")} className={styles.table__cell__avatar}>
+      <Table.RowItem
+        columnName="Avatar"
+        width={customiseTableWidth("avatar")}
+        className={styles.table__cell__avatar}
+      >
         {d.avatar}
       </Table.RowItem>
-      <Table.RowItem columnName="First Name" width={customiseTableWidth()}>{d.firstName}</Table.RowItem>
-      <Table.RowItem columnName="Last Name" width={customiseTableWidth()}>{d.lastName}</Table.RowItem>
-      <Table.RowItem columnName="Company" width={customiseTableWidth()}>{d.company}</Table.RowItem>
-      <Table.RowItem title={d.email} columnName="Email" width={customiseTableWidth("email")}>
+      <Table.RowItem columnName="First Name" width={customiseTableWidth()}>
+        {d.firstName}
+      </Table.RowItem>
+      <Table.RowItem columnName="Last Name" width={customiseTableWidth()}>
+        {d.lastName}
+      </Table.RowItem>
+      <Table.RowItem columnName="Company" width={customiseTableWidth()}>
+        {d.company}
+      </Table.RowItem>
+      <Table.RowItem
+        title={d.email}
+        columnName="Email"
+        width={customiseTableWidth("email")}
+      >
         <a href={`mailto:${d.email}"`}>{d.email}</a>
       </Table.RowItem>
       <Table.RowItem columnName="Phone" width={customiseTableWidth()}>
@@ -169,8 +203,15 @@ const ContactsList = props => {
   );
 
   return (
-    <StandardTemplate pageHead={pageHead} filterBar={<SearchBar></SearchBar>}>
-      {/* <Table data={tableData} columns={tableColumns} /> */}
+    <StandardTemplate
+      pageHead={pageHead}
+      filterBar={
+        <SearchBar
+          onFilterChange={handleFilterChange}
+          filterText={filterText}
+        ></SearchBar>
+      }
+    >
       <Table>
         {renderHeader()}
         <Table.Body>{data.map(renderRow)}</Table.Body>

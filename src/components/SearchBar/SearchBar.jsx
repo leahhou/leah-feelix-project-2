@@ -1,21 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Search, Label} from "@myob/myob-widgets";
+import { Search} from "@myob/myob-widgets";
 
-const SearchBar = () => {
-  const [search, setSearchValue] = React.useState("");
+const SearchBar = ({filterText,onFilterChange, ...props}) => {
   return (
     <div style={{ width: "200px" }}>
       <Search
         name="search"
         onChange={event => {
-          setSearchValue(event.target.value);
+          onFilterChange(event.target.value);
         }}
         placeholder="Search..."
         label="Search label"
-        value={search}
+        value={filterText}
       />
-      <Label color="green">{search}</Label>
+      {console.log(filterText)}
     </div>
   );
 };
