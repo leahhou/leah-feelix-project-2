@@ -134,7 +134,7 @@ const ContactsList = props => {
   const renderHeader = () => (
     <Table.Header>
       {columns.map(c => (
-        <Table.HeaderItem key={c.key} width={customiseTableWidth(c.key)} className={c.key==="avatar"? [styles.table_width] : null}>
+        <Table.HeaderItem key={c.key} width={customiseTableWidth(c.key)} className={c.key==="avatar"? [styles.table__cell__avatar] : null}>
           {sort[c.key] ? (
             <HeaderSort
               title={c.description}
@@ -153,7 +153,7 @@ const ContactsList = props => {
 
   const renderRow = d => (
     <Table.Row key={d.id}>
-      <Table.RowItem columnName="Avatar" width={customiseTableWidth("avatar")} className={styles.table_width}>
+      <Table.RowItem columnName="Avatar" width={customiseTableWidth("avatar")} className={styles.table__cell__avatar}>
         {d.avatar}
       </Table.RowItem>
       <Table.RowItem columnName="First Name" width={customiseTableWidth()}>{d.firstName}</Table.RowItem>
