@@ -4,11 +4,17 @@ import styles from "./ContactsList.module.css";
 import avatar1 from "./../../statics/avatar-1.png";
 import avatar2 from "./../../statics/avatar-2.png";
 import SearchBar from "./../SearchBar/SearchBar";
-import { StandardTemplate,
+import {
+  StandardTemplate,
   Button,
-  PageHead,Avatar, UserAvatar, Table, HeaderSort } from "@myob/myob-widgets";
+  PageHead,
+  Avatar,
+  UserAvatar,
+  Table,
+  HeaderSort
+} from "@myob/myob-widgets";
 
-const ContactsList = props => {
+const ContactsList = () => {
   const displayAvatar = (name, customStyle, image = null) => {
     return image ? (
       <UserAvatar name={name} imageSource={image} className={customStyle} />
@@ -22,7 +28,7 @@ const ContactsList = props => {
       id: 1,
       avatar: displayAvatar(
         "Chaya Philip",
-        [styles.contact__avatar, styles.override],
+        `${styles.contact__avatar}, ${styles.override}`,
         avatar1
       ),
       firstName: "Chaya",
@@ -35,7 +41,7 @@ const ContactsList = props => {
       id: 2,
       avatar: displayAvatar(
         "Gregory Hill",
-        [styles.contact__avatar, styles.override],
+        `${styles.contact__avatar}, ${styles.override}`,
         avatar2
       ),
       firstName: "Gregory",
@@ -46,15 +52,27 @@ const ContactsList = props => {
     },
     {
       id: 3,
-      avatar: displayAvatar("Jamie Mcnally", [
-        styles.contact__avatar,
-        styles.override
-      ]),
+      avatar: displayAvatar(
+        "Jamie Mcnally",
+        `${styles.contact__avatar}, ${styles.override}`
+      ),
       firstName: "Jamie",
       lastName: "Mcnally",
       company: "Chloe Associates",
       phone: "411-223-2089",
       email: "zandra.the.chandra@gmail.com"
+    },
+    {
+      id: 4,
+      avatar: displayAvatar(
+        "Chanh Kien",
+        `${styles.contact__avatar}, ${styles.override}`
+      ),
+      firstName: "Chanh",
+      lastName: "Kien",
+      company: "MYOB",
+      phone: "411-223-2089",
+      email: "chanh.kien@gmail.com"
     }
   ];
 
@@ -67,24 +85,14 @@ const ContactsList = props => {
     { key: "phone", description: "Phone", visible: true }
   ];
 
-  const [filterText, setFilterText] = React.useState("");
-  const [contacts, setContacts] = React.useState(tableData);
-  const handleFilterChange = filterInput => {
-    setFilterText(filterInput);
-    // setData(filterContacts(tableData));
-  };
-  const filterContacts = list => {
-    const filtered = [];
-    list.forEach(contact => {
-      const filterContact = contact.firstName.toLowerCase();
-      if (filterContact.indexOf(filterText) === -1) {
-        return;
-      }
-      filtered.push(contact);
-    });
-    return filtered;
-  };
-  
+  const [activeSort, setActiveSort] = React.useState({});
+  const [data, setData] = React.useState(tableData);
+  const [columns] = React.useState(tableColumns);
+  const [sort] = React.useState({
+    firstName: (a, b) => stringCompare(a.firstName, b.firstNname),
+    lastName: (a, b) => stringCompare(a.lastName, b.lastName)
+  });
+
   const stringCompare = (a, b) => {
     debugger;
     const nameA = a.toUpperCase();
@@ -117,14 +125,6 @@ const ContactsList = props => {
     setData(applySort(tableData, sort[column], nextSortOrder));
   };
 
-  const [activeSort, setActiveSort] = React.useState({});
-  const [data, setData] = React.useState(tableData);
-  const [columns] = React.useState(tableColumns);
-  const [sort] = React.useState({
-    firstName: (a, b) => stringCompare(a.firstName, b.firstNname),
-    lastName: (a, b) => stringCompare(a.lastName, b.lastName)
-  });
-
   const customiseTableWidth = (columnKey = null) => {
     if (columnKey === "avatar") {
       return "flex-1";
@@ -136,13 +136,31 @@ const ContactsList = props => {
     }
   };
 
+  const [filter, setFilter] = React.useState("");
+  const handleFilterChange = filterInput => {
+    setFilter(filterInput);
+    debugger;
+    filterContacts();
+    debugger;
+  };
+  const filterContacts = () => {
+    const filtedData =
+      filter !== ""
+        ? data.filter(item =>
+            item.firstName.toLowerCase().includes(filter.toLowerCase())
+          )
+        : tableData;
+    setData(filtedData);
+  };
+
+
   const pageHead = (
     <PageHead title="Contacts">
-      <Button type="primary" className={[styles.button, styles.override]}>
+      <Button type="primary" className={`${styles.button} ${styles.override}`}>
         Add Contacts
       </Button>
     </PageHead>
-  ); 
+  );
 
   const renderHeader = () => (
     <Table.Header>
@@ -150,7 +168,9 @@ const ContactsList = props => {
         <Table.HeaderItem
           key={c.key}
           width={customiseTableWidth(c.key)}
-          className={c.key === "avatar" ? [styles.table__cell__avatar] : null}
+          className={
+            c.key === "avatar" ? `${styles.table__cell__avatar}` : null
+          }
         >
           {sort[c.key] ? (
             <HeaderSort
@@ -205,7 +225,7 @@ const ContactsList = props => {
       filterBar={
         <SearchBar
           onFilterChange={handleFilterChange}
-          filterText={filterText}
+          filterText={filter}
         ></SearchBar>
       }
     >
@@ -213,9 +233,8 @@ const ContactsList = props => {
         {renderHeader()}
         <Table.Body>{data.map(renderRow)}</Table.Body>
       </Table>
+      {console.log(data)}
     </StandardTemplate>
-
-
   );
 };
 

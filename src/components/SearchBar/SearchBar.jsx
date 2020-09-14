@@ -14,7 +14,6 @@ const SearchBar = ({filterText,onFilterChange, ...props}) => {
         label="Search Contacts"
         value={filterText}
       />
-      {console.log(filterText)}
     </div>
   );
 };

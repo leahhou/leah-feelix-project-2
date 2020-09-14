@@ -12,8 +12,8 @@ const NavBar = props => {
 
 
   const primary = [
-    <Navigation.Link key="home" label="Contacts" url="/home"  className={[styles.nav, styles.override]}/>,
-    <Navigation.Link key="" url="/new" onSelect={() => "selected"} label="Create Contact" className={[styles.nav, styles.override]}/>
+    <Navigation.Link key="home" label="Contacts" url="/"  className={`${styles.nav} ${styles.override}`}/>,
+    <Navigation.Link key="" url="/new" onSelect={() => "selected"} label="Create Contact" className={`${styles.nav} ${styles.override}`}/>
   ];
 
 
