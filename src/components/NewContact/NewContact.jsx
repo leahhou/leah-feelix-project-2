@@ -39,7 +39,7 @@ const NewContact = props => {
     <>
       <ButtonRow
         secondary={[
-          <Link exact to="/">
+          <Link exact to="/" style={{ textDecoration: 'none' }}>
             <Button
               key="secondary-1"
               type="secondary"
@@ -50,7 +50,7 @@ const NewContact = props => {
           </Link>
         ]}
         primary={[
-          <Link exact to="/">
+          <Link exact to="/" style={{ textDecoration: 'none' }}>
             <Button
               key="primary-1"
               type="secondary"
@@ -59,7 +59,7 @@ const NewContact = props => {
               Cancel
             </Button>
           </Link>,
-          <Link exact to="/">
+          <Link exact to="/" style={{ textDecoration: 'none' }}>
             <Button
               key="primary-2"
               className={`${styles.button} ${styles.override}`}

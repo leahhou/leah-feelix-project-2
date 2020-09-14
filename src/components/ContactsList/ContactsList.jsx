@@ -155,8 +155,8 @@ const ContactsList = () => {
   };
 
   const pageHead = (
-    <PageHead title="Contacts">
-      <Link exact to="/new">
+    <PageHead title="Contacts" className={`${styles.link}`}>
+      <Link exact to="/new" >
         <Button
           type="primary"
           className={`${styles.button} ${styles.override}`}
@@ -164,9 +164,6 @@ const ContactsList = () => {
           Add Contacts
         </Button>
       </Link>
-      {/* <Button type="primary" className={`${styles.button} ${styles.override}`}>
-        Add Contacts
-      </Button> */}
     </PageHead>
   );
 
