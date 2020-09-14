@@ -5,15 +5,15 @@ import { Navigation, MYOBLogo } from "@myob/myob-widgets";
 
 const NavBar = props => {
   const brand = (
-    <Navigation.Brand url="#Dashboard" width="73px">
+    <Navigation.Brand url="/home" width="73px">
       <MYOBLogo />
     </Navigation.Brand>
   );
 
 
   const primary = [
-    <Navigation.Link key="home" label="Contacts" url="#Home" active className={[styles.nav, styles.override]}/>,
-    <Navigation.Link key="" onSelect={() => "selected"} label="Create Contact" className={[styles.nav, styles.override]}/>
+    <Navigation.Link key="home" label="Contacts" url="/home"  className={[styles.nav, styles.override]}/>,
+    <Navigation.Link key="" url="/new" onSelect={() => "selected"} label="Create Contact" className={[styles.nav, styles.override]}/>
   ];
 
 
