@@ -11,7 +11,7 @@ const SearchBar = ({filterText,onFilterChange, ...props}) => {
           onFilterChange(event.target.value);
         }}
         placeholder="Search..."
-        label="Search label"
+        label="Search Contacts"
         value={filterText}
       />
       {console.log(filterText)}
