@@ -5,3 +5,8 @@
 .button.override {
   font-weight: 600;
 }
+
+.table_width {
+  width:60px;
+  max-width:60px;
+}

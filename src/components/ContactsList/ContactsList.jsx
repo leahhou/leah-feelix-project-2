@@ -77,7 +77,7 @@ const ContactsList = props => {
     { key: "firstName", description: "First Name", visible: true },
     { key: "lastName", description: "Last Name", visible: true },
     { key: "company", description: "Company", visible: true },
-    { key: "email", description: "Email", visible: true },
+    { key: "email", description: "Email", visible:true },
     { key: "phone", description: "Phone", visible: true }
   ];
 
@@ -121,14 +121,20 @@ const ContactsList = props => {
   const [data, setData] = React.useState(tableData);
   const [columns] = React.useState(tableColumns);
 
-  // const adjustHeaderWidth = (columnKey) => {
-  //   if (columnKey === "avatar")
-  // }
-
+  const customiseTableWidth = (columnKey = null) => {
+    if (columnKey === "avatar") {
+      return "flex-1";
+    }
+    if (columnKey === "email") {
+      return "flex-3";
+    } else {
+      return "flex-2";
+    }
+  };
   const renderHeader = () => (
     <Table.Header>
       {columns.map(c => (
-        <Table.HeaderItem key={c.key} textWrap="nowrap" >
+        <Table.HeaderItem key={c.key} width={customiseTableWidth(c.key)} className={c.key==="avatar"? [styles.table_width] : null}>
           {sort[c.key] ? (
             <HeaderSort
               title={c.description}
@@ -147,14 +153,16 @@ const ContactsList = props => {
 
   const renderRow = d => (
     <Table.Row key={d.id}>
-      <Table.RowItem columnName="avatar">{d.avatar}</Table.RowItem>
-      <Table.RowItem columnName="firstName">{d.firstName}</Table.RowItem>
-      <Table.RowItem columnName="lastName">{d.lastName}</Table.RowItem>
-      <Table.RowItem columnName="company">{d.company}</Table.RowItem>
-      <Table.RowItem title={d.email} columnName="email">
+      <Table.RowItem columnName="Avatar" width={customiseTableWidth("avatar")} className={styles.table_width}>
+        {d.avatar}
+      </Table.RowItem>
+      <Table.RowItem columnName="First Name" width={customiseTableWidth()}>{d.firstName}</Table.RowItem>
+      <Table.RowItem columnName="Last Name" width={customiseTableWidth()}>{d.lastName}</Table.RowItem>
+      <Table.RowItem columnName="Company" width={customiseTableWidth()}>{d.company}</Table.RowItem>
+      <Table.RowItem title={d.email} columnName="Email" width={customiseTableWidth("email")}>
         <a href={`mailto:${d.email}"`}>{d.email}</a>
       </Table.RowItem>
-      <Table.RowItem columnName="phone">
+      <Table.RowItem columnName="Phone" width={customiseTableWidth()}>
         <a href={`tel:${d.phone}"`}>{d.phone}</a>
       </Table.RowItem>
     </Table.Row>
