@@ -12,7 +12,7 @@ import {
   Card
 } from "@myob/myob-widgets";
 
-const NewContact = props => {
+const NewContact = ({addNewContact, ...props}) => {
   const MockCardHeader = () => <PageHead title="Details" />;
 
   const MockCardBody = () => (

@@ -90,12 +90,12 @@ const ContactsList = () => {
   const [data, setData] = React.useState(tableData);
   const [columns] = React.useState(tableColumns);
   const [sort] = React.useState({
-    firstName: (a, b) => stringCompare(a.firstName, b.firstNname),
+    firstName: (a, b) => stringCompare(a.firstName, b.firstName),
     lastName: (a, b) => stringCompare(a.lastName, b.lastName)
   });
 
   const stringCompare = (a, b) => {
-    debugger;
+
     const nameA = a.toUpperCase();
     const nameB = b.toUpperCase();
     if (nameA < nameB) {
@@ -109,9 +109,9 @@ const ContactsList = () => {
 
   const applySort = (data, sortFn, isDescending) => {
     const result = data.slice(); //copy the data into new variable
-    debugger;
+
     result.sort(sortFn);
-    debugger;
+   
     //default sort order is ascending if no function is passed as param
     //sortFn: give a specific sorting logic
     return isDescending ? result.reverse() : result;

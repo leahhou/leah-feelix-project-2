@@ -6,6 +6,11 @@ import "@myob/myob-styles/dist/styles/myob-clean.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
+  const [contactForm, setContactForm] = React.useState({});
+
+  const addNewContact = newContact => {
+    setContactForm({newContact});
+  }
   return (
     <Router>
       <div className="App">
@@ -15,7 +20,7 @@ function App() {
             <ContactsList />
           </Route>
           <Route exact path="/new">
-            <NewContact />
+            <NewContact addNewContact={addNewContact}/>
           </Route>
         </Switch>
       </div>
