@@ -238,7 +238,6 @@ const ContactsList = () => {
         {renderHeader()}
         <Table.Body>{data.map(renderRow)}</Table.Body>
       </Table>
-      {console.log(data)}
     </StandardTemplate>
   );
 };
