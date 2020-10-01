@@ -1,130 +1,52 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "./ContactsList.module.css";
-import avatar1 from "./../../statics/avatar-1.png";
-import avatar2 from "./../../statics/avatar-2.png";
-import SearchBar from "./../SearchBar/SearchBar";
 import {
-  StandardTemplate,
-  Button,
-  PageHead,
   Avatar,
   UserAvatar,
   Table,
   HeaderSort
 } from "@myob/myob-widgets";
-import { Link } from "react-router-dom";
 
-const ContactsList = () => {
-  const displayAvatar = (name, customStyle, image = null) => {
-    return image ? (
-      <UserAvatar name={name} imageSource={image} className={customStyle} />
-    ) : (
-      <Avatar type="user" color="regal" name={name} />
-    );
-  };
+const ContactsList = ({contacts, columns}) => {
 
-  const tableData = [
-    {
-      id: 1,
-      avatar: displayAvatar(
-        "Chaya Philip",
-        `${styles.contact__avatar}, ${styles.override}`,
-        avatar1
-      ),
-      firstName: "Chaya",
-      lastName: "Philip",
-      company: "Trescothik and Co",
-      phone: "411-223-2089",
-      email: "markzandrapatterson@gmail.com"
-    },
-    {
-      id: 2,
-      avatar: displayAvatar(
-        "Gregory Hill",
-        `${styles.contact__avatar}, ${styles.override}`,
-        avatar2
-      ),
-      firstName: "Gregory",
-      lastName: "Hill",
-      company: "Torrance Brothers",
-      phone: "411-223-2089",
-      email: "mark_patterson_newyork@gmail.com"
-    },
-    {
-      id: 3,
-      avatar: displayAvatar(
-        "Jamie Mcnally",
-        `${styles.contact__avatar}, ${styles.override}`
-      ),
-      firstName: "Jamie",
-      lastName: "Mcnally",
-      company: "Chloe Associates",
-      phone: "411-223-2089",
-      email: "zandra.the.chandra@gmail.com"
-    },
-    {
-      id: 4,
-      avatar: displayAvatar(
-        "Chanh Kien",
-        `${styles.contact__avatar}, ${styles.override}`
-      ),
-      firstName: "Chanh",
-      lastName: "Kien",
-      company: "MYOB",
-      phone: "411-223-2089",
-      email: "chanh.kien@gmail.com"
-    }
-  ];
+  // const [activeSort, setActiveSort] = React.useState({});
+  // const [sort] = React.useState({
+  //   firstName: (a, b) => stringCompare(a.firstName, b.firstName),
+  //   lastName: (a, b) => stringCompare(a.lastName, b.lastName)
+  // });
 
-  const tableColumns = [
-    { key: "avatar", description: "", visible: true },
-    { key: "firstName", description: "First Name", visible: true },
-    { key: "lastName", description: "Last Name", visible: true },
-    { key: "company", description: "Company", visible: true },
-    { key: "email", description: "Email", visible: true },
-    { key: "phone", description: "Phone", visible: true }
-  ];
-  
-  const [data, setData] = React.useState(tableData);
-  const [columns] = React.useState(tableColumns);
-  const [activeSort, setActiveSort] = React.useState({});
-  const [sort] = React.useState({
-    firstName: (a, b) => stringCompare(a.firstName, b.firstName),
-    lastName: (a, b) => stringCompare(a.lastName, b.lastName)
-  });
+  // const stringCompare = (a, b) => {
 
-  const stringCompare = (a, b) => {
+  //   const nameA = a.toUpperCase();
+  //   const nameB = b.toUpperCase();
+  //   if (nameA < nameB) {
+  //     return -1;
+  //   }
+  //   if (nameA > nameB) {
+  //     return 1;
+  //   }
+  //   return 0;
+  // };
 
-    const nameA = a.toUpperCase();
-    const nameB = b.toUpperCase();
-    if (nameA < nameB) {
-      return -1;
-    }
-    if (nameA > nameB) {
-      return 1;
-    }
-    return 0;
-  };
+  // const applySort = (data, sortFn, isDescending) => {
+  //   const result = data.slice(); //copy the data into new variable
 
-  const applySort = (data, sortFn, isDescending) => {
-    const result = data.slice(); //copy the data into new variable
-
-    result.sort(sortFn);
+  //   result.sort(sortFn);
    
-    //default sort order is ascending if no function is passed as param
-    //sortFn: give a specific sorting logic
-    return isDescending ? result.reverse() : result;
-  };
+  //   //default sort order is ascending if no function is passed as param
+  //   //sortFn: give a specific sorting logic
+  //   return isDescending ? result.reverse() : result;
+  // };
 
-  const onSort = column => {
-    //activeSort is the shape of arrow icon shown next to column can be sorted.
-    const nextSortOrder = !activeSort.descending; //I supposed descending is a bool, why can't I name it isDescending!!!
-    setActiveSort({ column, descending: nextSortOrder }); //column is also not a good name after reading the Docs
-    //sort the tableData by certain column given the shape of arrow icon shown next to the column name
-    debugger;
-    setData(applySort(tableData, sort[column], nextSortOrder));
-  };
+  // const onSort = column => {
+  //   //activeSort is the shape of arrow icon shown next to column can be sorted.
+  //   const nextSortOrder = !activeSort.descending; //I supposed descending is a bool, why can't I name it isDescending!!!
+  //   setActiveSort({ column, descending: nextSortOrder }); //column is also not a good name after reading the Docs
+  //   //sort the tableData by certain column given the shape of arrow icon shown next to the column name
+  //   debugger;
+  //   // setData(applySort(tableData, sort[column], nextSortOrder));
+  // };
 
   const customiseTableWidth = (columnKey = null) => {
     if (columnKey === "avatar") {
@@ -137,35 +59,6 @@ const ContactsList = () => {
     }
   };
 
-  const [filter, setFilter] = React.useState("");
-  const handleFilterChange = filterInput => {
-    setFilter(filterInput);
-    debugger;
-    filterContacts();
-    debugger;
-  };
-  const filterContacts = () => {
-    const filtedData =
-      filter !== ""
-        ? data.filter(item =>
-            item.firstName.toLowerCase().includes(filter.toLowerCase())
-          )
-        : tableData;
-    setData(filtedData);
-  };
-
-  const pageHead = (
-    <PageHead title="Contacts" className={`${styles.link}`}>
-      <Link exact to="/new" >
-        <Button
-          type="primary"
-          className={`${styles.button} ${styles.override}`}
-        >
-          Add Contacts
-        </Button>
-      </Link>
-    </PageHead>
-  );
 
   const renderHeader = () => (
     <Table.Header>
@@ -177,7 +70,7 @@ const ContactsList = () => {
             c.key === "avatar" ? `${styles.table__cell__avatar}` : null
           }
         >
-          {sort[c.key] ? (
+          {/* {sort[c.key] ? (
             <HeaderSort
               title={c.description}
               sortName={c.key}
@@ -187,7 +80,8 @@ const ContactsList = () => {
             />
           ) : (
             c.description
-          )}
+          )} */}
+          {c.description}
         </Table.HeaderItem>
       ))}
     </Table.Header>
@@ -227,12 +121,30 @@ const ContactsList = () => {
   return (
       <Table>
         {renderHeader()}
-        <Table.Body>{data.map(renderRow)}</Table.Body>
+        <Table.Body>{contacts.map(renderRow)}</Table.Body>
       </Table>
 
   );
 };
 
-ContactsList.propTypes = {};
+ContactsList.propTypes = {
+  contacts: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    avatar: PropTypes.instanceOf(UserAvatar || Avatar),
+    firstName: PropTypes.string.isRequired,
+    lastName: PropTypes.string.isRequired,
+    company: PropTypes.string,
+    phone: PropTypes.string,
+    email: PropTypes.string,
+  })).isRequired,
+  columns: PropTypes.arrayOf(PropTypes.shape({
+    key: PropTypes.string,
+    description: PropTypes.string,
+    visible: PropTypes.bool
+  })).isRequired
+};
+
+ContactsList.defaultProps = {
+};
 
 export default ContactsList;
