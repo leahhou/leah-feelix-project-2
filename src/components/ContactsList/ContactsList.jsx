@@ -8,7 +8,7 @@ import {
   HeaderSort
 } from "@myob/myob-widgets";
 
-const ContactsList = ({contacts, columns, filterContacts, filter}) => {
+const ContactsList = ({contacts, columns, filterContacts, filter, sort, activeSort, onSort}) => {
 
   // const [activeSort, setActiveSort] = React.useState({});
   // const [sort] = React.useState({
@@ -44,8 +44,7 @@ const ContactsList = ({contacts, columns, filterContacts, filter}) => {
   //   const nextSortOrder = !activeSort.descending; //I supposed descending is a bool, why can't I name it isDescending!!!
   //   setActiveSort({ column, descending: nextSortOrder }); //column is also not a good name after reading the Docs
   //   //sort the tableData by certain column given the shape of arrow icon shown next to the column name
-  //   debugger;
-  //   // setData(applySort(tableData, sort[column], nextSortOrder));
+  //   setData(applySort(contacts, sort[column], nextSortOrder));
   // };
 
   const customiseTableWidth = (columnKey = null) => {
@@ -70,7 +69,7 @@ const ContactsList = ({contacts, columns, filterContacts, filter}) => {
             c.key === "avatar" ? `${styles.table__cell__avatar}` : null
           }
         >
-          {/* {sort[c.key] ? (
+          {sort[c.key] ? (
             <HeaderSort
               title={c.description}
               sortName={c.key}
@@ -80,8 +79,7 @@ const ContactsList = ({contacts, columns, filterContacts, filter}) => {
             />
           ) : (
             c.description
-          )} */}
-          {c.description}
+          )}
         </Table.HeaderItem>
       ))}
     </Table.Header>
@@ -124,8 +122,6 @@ const ContactsList = ({contacts, columns, filterContacts, filter}) => {
       <Table>
         {renderHeader()}
          <Table.Body>{filtedContacts.map(renderRow)}</Table.Body>
-        {/* <Table.Body>{contacts.map(renderRow)}</Table.Body> */}
-
       </Table>
 
   );
