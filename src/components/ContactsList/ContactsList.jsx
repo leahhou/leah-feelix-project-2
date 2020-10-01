@@ -85,10 +85,10 @@ const ContactsList = () => {
     { key: "email", description: "Email", visible: true },
     { key: "phone", description: "Phone", visible: true }
   ];
-
-  const [activeSort, setActiveSort] = React.useState({});
+  
   const [data, setData] = React.useState(tableData);
   const [columns] = React.useState(tableColumns);
+  const [activeSort, setActiveSort] = React.useState({});
   const [sort] = React.useState({
     firstName: (a, b) => stringCompare(a.firstName, b.firstName),
     lastName: (a, b) => stringCompare(a.lastName, b.lastName)
@@ -225,20 +225,11 @@ const ContactsList = () => {
   );
 
   return (
-    <StandardTemplate
-      pageHead={pageHead}
-      filterBar={
-        <SearchBar
-          onFilterChange={handleFilterChange}
-          filterText={filter}
-        ></SearchBar>
-      }
-    >
       <Table>
         {renderHeader()}
         <Table.Body>{data.map(renderRow)}</Table.Body>
       </Table>
-    </StandardTemplate>
+
   );
 };
 

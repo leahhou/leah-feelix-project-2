@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Search} from "@myob/myob-widgets";
+import { Search } from "@myob/myob-widgets";
 
-const SearchBar = ({filterText,onFilterChange, ...props}) => {
+const SearchBar = ({ filterText, onFilterChange, label, ...props }) => {
   return (
     <div style={{ width: "200px" }}>
       <Search
@@ -11,13 +11,23 @@ const SearchBar = ({filterText,onFilterChange, ...props}) => {
           onFilterChange(event.target.value);
         }}
         placeholder="Search..."
-        label="Search Contacts"
+        label={label}
         value={filterText}
       />
     </div>
   );
 };
 
-SearchBar.propTypes = {};
+SearchBar.propTypes = {
+  name: PropTypes.string,
+  placeholder: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+};
+SearchBar.defaultProps = {
+  name: "search",
+  placeholder: "Search..."
+};
 
 export default SearchBar;

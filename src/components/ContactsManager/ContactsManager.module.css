@@ -1,0 +1,16 @@
+.contact__avatar.override{
+  background-color: #E4BDFF;
+}
+
+.button.override{
+  font-weight: 600;
+}
+
+.table__cell__avatar {
+  width:60px;
+  max-width:60px;
+}
+
+.link div a {
+  text-decoration: none;
+}

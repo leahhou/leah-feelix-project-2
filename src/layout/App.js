@@ -1,5 +1,6 @@
 import React from "react";
-import ContactsList from "./../components/ContactsList/ContactsList";
+// import ContactsList from "./../components/ContactsList/ContactsList";
+import ContactsManager from "./../components/ContactsManager/ContactsManager";
 import NewContact from "./../components/NewContact/NewContact";
 import NavBar from "./../components/NavBar/NavBar";
 import "@myob/myob-styles/dist/styles/myob-clean.css";
@@ -17,7 +18,7 @@ function App() {
         <NavBar></NavBar>
         <Switch>
           <Route exact path="/">
-            <ContactsList />
+            <ContactsManager />
           </Route>
           <Route exact path="/new">
             <NewContact addNewContact={addNewContact}/>
