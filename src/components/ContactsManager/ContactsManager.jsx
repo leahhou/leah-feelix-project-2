@@ -1,7 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from "react";
+import PropTypes from "prop-types";
 import SearchBar from "./../SearchBar/SearchBar";
-import ContactsList from "./../ContactsList/ContactsList"
+import ContactsList from "./../ContactsList/ContactsList";
+import NewContact from "./../NewContact/NewContact";
 import avatar1 from "./../../statics/avatar-1.png";
 import avatar2 from "./../../statics/avatar-2.png";
 import styles from "./ContactsManager.module.css";
@@ -13,20 +14,21 @@ import {
   PageHead
 } from "@myob/myob-widgets";
 import { Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 const ContactsManager = () => {
   const [filter, setFilter] = React.useState("");
   const handleFilterChange = filterInput => {
     setFilter(filterInput);
   };
-    const filterContacts = (filterInput, contacts) => {
+  const filterContacts = (filterInput, contacts) => {
     const filtedContacts =
-    filterInput !== ""
+      filterInput !== ""
         ? contacts.filter(item =>
             item.firstName.toLowerCase().includes(filterInput.toLowerCase())
           )
         : contacts;
-   return filtedContacts;
+    return filtedContacts;
   };
   const displayAvatar = (name, customStyle, image = null) => {
     return image ? (
@@ -96,7 +98,7 @@ const ContactsManager = () => {
     { key: "email", description: "Email", visible: true },
     { key: "phone", description: "Phone", visible: true }
   ];
-  
+
   const [data, setData] = React.useState(tableData);
   const [columns] = React.useState(tableColumns);
   const [activeSort, setActiveSort] = React.useState({});
@@ -104,9 +106,13 @@ const ContactsManager = () => {
     firstName: (a, b) => stringCompare(a.firstName, b.firstName),
     lastName: (a, b) => stringCompare(a.lastName, b.lastName)
   });
+  const [contactForm, setContactForm] = React.useState({});
+
+  const addNewContact = newContact => {
+    setContactForm({ newContact });
+  };
 
   const stringCompare = (a, b) => {
-
     const nameA = a.toUpperCase();
     const nameB = b.toUpperCase();
     if (nameA < nameB) {
@@ -122,7 +128,7 @@ const ContactsManager = () => {
     const result = data.slice(); //copy the data into new variable
 
     result.sort(sortFn);
-   
+
     //default sort order is ascending if no function is passed as param
     //sortFn: give a specific sorting logic
     return isDescending ? result.reverse() : result;
@@ -137,7 +143,7 @@ const ContactsManager = () => {
   };
   const pageHead = (
     <PageHead title="Contacts" className={`${styles.link}`}>
-      <Link exact to="/new" >
+      <Link exact to="/new">
         <Button
           type="primary"
           className={`${styles.button} ${styles.override}`}
@@ -148,23 +154,36 @@ const ContactsManager = () => {
     </PageHead>
   );
   return (
-    <StandardTemplate
-      pageHead={pageHead}
-      filterBar={
-        <SearchBar
-          onFilterChange={handleFilterChange}
-          filterText={filter}
-          label="Search Contacts"
-        ></SearchBar>
-      }
-    >
-      <ContactsList sort = {sort} activeSort={activeSort} onSort={onSort} contacts={data} columns={columns} filter={filter} filterContacts={filterContacts}></ContactsList>
-    </StandardTemplate>
+    <Switch>
+      <Route exact path="/">
+        <StandardTemplate
+          pageHead={pageHead}
+          filterBar={
+            <SearchBar
+              onFilterChange={handleFilterChange}
+              filterText={filter}
+              label="Search Contacts"
+            ></SearchBar>
+          }
+        >
+          <ContactsList
+            sort={sort}
+            activeSort={activeSort}
+            onSort={onSort}
+            contacts={data}
+            columns={columns}
+            filter={filter}
+            filterContacts={filterContacts}
+          ></ContactsList>
+        </StandardTemplate>
+      </Route>
+      <Route exact path="/new">
+        <NewContact addNewContact={addNewContact} />
+      </Route>
+    </Switch>
   );
-}
+};
 
-ContactsManager.propTypes = {
+ContactsManager.propTypes = {};
 
-}
-
-export default ContactsManager
+export default ContactsManager;
