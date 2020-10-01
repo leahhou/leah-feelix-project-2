@@ -10,43 +10,6 @@ import {
 
 const ContactsList = ({contacts, columns, filterContacts, filter, sort, activeSort, onSort}) => {
 
-  // const [activeSort, setActiveSort] = React.useState({});
-  // const [sort] = React.useState({
-  //   firstName: (a, b) => stringCompare(a.firstName, b.firstName),
-  //   lastName: (a, b) => stringCompare(a.lastName, b.lastName)
-  // });
-
-  // const stringCompare = (a, b) => {
-
-  //   const nameA = a.toUpperCase();
-  //   const nameB = b.toUpperCase();
-  //   if (nameA < nameB) {
-  //     return -1;
-  //   }
-  //   if (nameA > nameB) {
-  //     return 1;
-  //   }
-  //   return 0;
-  // };
-
-  // const applySort = (data, sortFn, isDescending) => {
-  //   const result = data.slice(); //copy the data into new variable
-
-  //   result.sort(sortFn);
-   
-  //   //default sort order is ascending if no function is passed as param
-  //   //sortFn: give a specific sorting logic
-  //   return isDescending ? result.reverse() : result;
-  // };
-
-  // const onSort = column => {
-  //   //activeSort is the shape of arrow icon shown next to column can be sorted.
-  //   const nextSortOrder = !activeSort.descending; //I supposed descending is a bool, why can't I name it isDescending!!!
-  //   setActiveSort({ column, descending: nextSortOrder }); //column is also not a good name after reading the Docs
-  //   //sort the tableData by certain column given the shape of arrow icon shown next to the column name
-  //   setData(applySort(contacts, sort[column], nextSortOrder));
-  // };
-
   const customiseTableWidth = (columnKey = null) => {
     if (columnKey === "avatar") {
       return "flex-1";
@@ -57,7 +20,6 @@ const ContactsList = ({contacts, columns, filterContacts, filter, sort, activeSo
       return "flex-2";
     }
   };
-
 
   const renderHeader = () => (
     <Table.Header>
