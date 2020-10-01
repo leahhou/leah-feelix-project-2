@@ -8,7 +8,7 @@ import {
   HeaderSort
 } from "@myob/myob-widgets";
 
-const ContactsList = ({contacts, columns}) => {
+const ContactsList = ({contacts, columns, filterContacts, filter}) => {
 
   // const [activeSort, setActiveSort] = React.useState({});
   // const [sort] = React.useState({
@@ -117,11 +117,15 @@ const ContactsList = ({contacts, columns}) => {
       </Table.RowItem>
     </Table.Row>
   );
+  
+  const filtedContacts = filterContacts(filter, contacts)
 
   return (
       <Table>
         {renderHeader()}
-        <Table.Body>{contacts.map(renderRow)}</Table.Body>
+         <Table.Body>{filtedContacts.map(renderRow)}</Table.Body>
+        {/* <Table.Body>{contacts.map(renderRow)}</Table.Body> */}
+
       </Table>
 
   );
@@ -141,7 +145,7 @@ ContactsList.propTypes = {
     key: PropTypes.string,
     description: PropTypes.string,
     visible: PropTypes.bool
-  })).isRequired
+  })).isRequired,
 };
 
 ContactsList.defaultProps = {

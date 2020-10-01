@@ -19,6 +19,24 @@ const ContactsManager = props => {
   const handleFilterChange = filterInput => {
     setFilter(filterInput);
   };
+    const filterContacts = (filter, data) => {
+    const filtedData =
+      filter !== ""
+        ? data.filter(item =>
+            item.firstName.toLowerCase().includes(filter.toLowerCase())
+          )
+        : data;
+   return filtedData;
+  };
+  // const filterContacts = () => {
+  //   const filtedData =
+  //     filter !== ""
+  //       ? data.filter(item =>
+  //           item.firstName.toLowerCase().includes(filter.toLowerCase())
+  //         )
+  //       : tableData;
+  //   setData(filtedData);
+  // };
   const displayAvatar = (name, customStyle, image = null) => {
     return image ? (
       <UserAvatar name={name} imageSource={image} className={customStyle} />
@@ -113,11 +131,7 @@ const ContactsManager = props => {
         ></SearchBar>
       }
     >
-      <ContactsList contacts={data} columns={columns}></ContactsList>
-      {/* <Table>
-        {renderHeader()}
-        <Table.Body>{data.map(renderRow)}</Table.Body>
-      </Table> */}
+      <ContactsList contacts={data} columns={columns} filter={filter} filterContacts={filterContacts}></ContactsList>
     </StandardTemplate>
   );
 }
