@@ -106,10 +106,9 @@ const ContactsManager = () => {
     firstName: (a, b) => stringCompare(a.firstName, b.firstName),
     lastName: (a, b) => stringCompare(a.lastName, b.lastName)
   });
-  const [contactForm, setContactForm] = React.useState({});
 
   const addNewContact = newContact => {
-    setContactForm({ newContact });
+    setData([...data, newContact]);
   };
 
   const stringCompare = (a, b) => {
