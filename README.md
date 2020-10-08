@@ -8,4 +8,4 @@
 ### My-Contacts-Mobile Mock-up
 
 ![alt text](./src/statics/contact_list_mobile.png)
-![alt text](./src/statics/new_contact_mockup.png)
+![alt text](./src/statics/new_contact_mobile.png)
