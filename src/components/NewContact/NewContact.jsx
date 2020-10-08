@@ -20,12 +20,14 @@ const NewContact = ({ addNewContact, ...props }) => {
     phone: "",
     email: ""
   });
+  const [fNameErrorMessage, setfNameErrorMessage] = React.useState("");
+  const [lNameErrorMessage, setlNameErrorMessage] = React.useState("");
 
   const handleInputChange = (event, field) => {
     const update = {};
-    update[field] = event.target.value;
+    const input = event.target.value;
+    update[field] = input;
     setNewContact({ ...newContact, ...update });
-    console.log(event);
   };
   const mockCardHeader = <PageHead title="Details" />;
 
@@ -40,14 +42,14 @@ const NewContact = ({ addNewContact, ...props }) => {
       <Input
         name="firstName"
         label="First Name *"
-        errorMessage="Oops this field is required"
+        errorMessage={fNameErrorMessage}
         onChange={event => handleInputChange(event, "firstName")}
         value={newContact.firstName}
       />
       <Input
         name="lastName"
         label="Last Name *"
-        errorMessage="Oops this field is required"
+        errorMessage={lNameErrorMessage}
         onChange={event => {
           handleInputChange(event, "lastName");
         }}
@@ -94,7 +96,6 @@ const NewContact = ({ addNewContact, ...props }) => {
               Delete
             </Button>
           </Link>
-          
         ]}
         primary={[
           <Link exact to="/" style={{ textDecoration: "none" }}>
@@ -122,13 +123,6 @@ const NewContact = ({ addNewContact, ...props }) => {
     </>
   );
   return (
-    // <div
-    //   style={{
-    //     width: "100%",
-    //     height: "100%",
-    //     background: "#ebeef1"
-    //   }}
-    // >
     <FormTemplate
       actions={pageFooter}
       pageHead={<PageHead title="Create Contact"></PageHead>}
@@ -143,7 +137,6 @@ const NewContact = ({ addNewContact, ...props }) => {
         body={<Card.Body child={mockCardBody} />}
       />
     </FormTemplate>
-    // </div>
   );
 };
 
