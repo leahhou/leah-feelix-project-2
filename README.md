@@ -2,7 +2,7 @@
 
 ### Description of project
 
-- Project Name: 'My Contacts"
+- Project: 'My Contacts"
 - This project is created to practice using feelix design system (https://feelix.myob.com/)
 -  The project consists of 2 pages:
 - - Page One: A list of contacts, and be able to search by contact's first name
@@ -11,18 +11,18 @@
 
 ### Desktop Mock-up
 
-Contacts List
+Contacts List Page:
 ![alt text](./src/statics/contact_list_mockup.png)
 
-New Contact
+New Contact Page:
 ![alt text](./src/statics/new_contact_mockup.png)
 
-### My-Contacts-Mobile Mock-up
+### Mobile Mock-up
 
-Contacts List
+Contacts List Page:
 ![alt text](./src/statics/contact_list_mobile.png)
 
-New Contact
+New Contact Page:
 ![alt text](./src/statics/new_contact_mobile.png)
 
 ### To start the app
