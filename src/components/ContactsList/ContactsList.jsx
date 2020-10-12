@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import styles from "./ContactsList.module.css";
 import { Avatar, Table, HeaderSort } from "@myob/myob-widgets";
-import { stringify } from "querystring";
 
 const ContactsList = ({
   contacts,

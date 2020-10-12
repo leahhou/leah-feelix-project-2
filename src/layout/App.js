@@ -9,7 +9,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <NavBar></NavBar>
+        <NavBar navs= {navs}></NavBar>
         <ContactsManager></ContactsManager>
       </div>
     </Router>
@@ -17,3 +17,17 @@ function App() {
 }
 
 export default App;
+
+const navs = [
+  {
+    key: "home",
+    label: "Contacts",
+    url:"/"
+  },
+  {
+    key: "",
+    label: "Create Contact",
+    url:"/new",
+    // onSelect: () => "selected"
+  }
+];
