@@ -11,6 +11,16 @@ const ContactsList = ({
   activeSort,
   onSort
 }) => {
+
+  const contactsTableColumn = [
+    { key: "avatar", description: "", visible: true },
+    { key: "firstName", description: "First Name", visible: true },
+    { key: "lastName", description: "Last Name", visible: true },
+    { key: "company", description: "Company", visible: true },
+    { key: "email", description: "Email", visible: true },
+    { key: "phone", description: "Phone", visible: true }
+  ];
+
   const customiseTableWidth = (columnKey = null) => {
     if (columnKey === "avatar") {
       return "flex-1";
@@ -22,18 +32,9 @@ const ContactsList = ({
     }
   };
 
-  const tableColumn = [
-    { key: "avatar", description: "", visible: true },
-    { key: "firstName", description: "First Name", visible: true },
-    { key: "lastName", description: "Last Name", visible: true },
-    { key: "company", description: "Company", visible: true },
-    { key: "email", description: "Email", visible: true },
-    { key: "phone", description: "Phone", visible: true }
-  ];
-
   const renderHeader = () => (
     <Table.Header>
-      {tableColumn.map(c => (
+      {contactsTableColumn.map(c => (
         <Table.HeaderItem
           key={c.key}
           width={customiseTableWidth(c.key)}
@@ -115,7 +116,7 @@ ContactsList.propTypes = {
       email: PropTypes.string
     })
   ).isRequired,
-  tableColumn: PropTypes.arrayOf(
+  contactsTableColumn: PropTypes.arrayOf(
     PropTypes.shape({
       key: PropTypes.string,
       description: PropTypes.string,
