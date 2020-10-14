@@ -22,8 +22,10 @@ New Contact Page:
 Contacts List Page:
 ![alt text](./src/statics/contact_list_mobile.png)
 
+
 New Contact Page:
 ![alt text](./src/statics/new_contact_mobile.png)
+
 
 ### To start the app
 1. clone the repo to your local machine
@@ -31,3 +33,5 @@ New Contact Page:
 3. run app locally:
 - `npm install`
 - `npm start`
+
+
