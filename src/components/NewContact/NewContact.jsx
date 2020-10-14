@@ -109,14 +109,20 @@ const NewContact = ({ addNewContact, ...props }) => {
               Cancel
             </Button>
           </Link>,
-          <Link exact to="/" style={{ textDecoration: "none" }}>
+          <Link
+            exact
+            to="/"
+            style={{ textDecoration: "none" }}
+          >
             <Button
               key="primary-2"
               className={`${styles.button} ${styles.override}`}
               onClick={() => {
                 addNewContact(newContact);
               }}
-              disabled={newContact.firstName && newContact.lastName ? true : false}
+              disabled={
+                newContact.firstName && newContact.lastName ? true : false
+              }
             >
               Save
             </Button>

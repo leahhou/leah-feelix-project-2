@@ -5,7 +5,6 @@ import { Avatar, Table, HeaderSort } from "@myob/myob-widgets";
 
 const ContactsList = ({
   contacts,
-  columns,
   filterContacts,
   filter,
   sort,
@@ -23,9 +22,18 @@ const ContactsList = ({
     }
   };
 
+  const tableColumn = [
+    { key: "avatar", description: "", visible: true },
+    { key: "firstName", description: "First Name", visible: true },
+    { key: "lastName", description: "Last Name", visible: true },
+    { key: "company", description: "Company", visible: true },
+    { key: "email", description: "Email", visible: true },
+    { key: "phone", description: "Phone", visible: true }
+  ];
+
   const renderHeader = () => (
     <Table.Header>
-      {columns.map(c => (
+      {tableColumn.map(c => (
         <Table.HeaderItem
           key={c.key}
           width={customiseTableWidth(c.key)}
@@ -107,7 +115,7 @@ ContactsList.propTypes = {
       email: PropTypes.string
     })
   ).isRequired,
-  columns: PropTypes.arrayOf(
+  tableColumn: PropTypes.arrayOf(
     PropTypes.shape({
       key: PropTypes.string,
       description: PropTypes.string,

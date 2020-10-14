@@ -1,16 +1,6 @@
 import React from "react";
 import contactsData from "../../data";
-import SearchBar from "./../SearchBar/SearchBar";
-import ContactsList from "./../ContactsList/ContactsList";
-import NewContact from "./../NewContact/NewContact";
-import styles from "./ContactsManager.module.css";
-import {
-  StandardTemplate,
-  Button,
-  PageHead
-} from "@myob/myob-widgets";
-import { Link } from "react-router-dom";
-import { Switch, Route } from "react-router-dom";
+import ContactsMasterView from "../ContactsMasterView/ContactsMasterView";
 
 const ContactsManager = () => {
   const [filter, setFilter] = React.useState("");
@@ -28,18 +18,7 @@ const ContactsManager = () => {
   };
 
   const tableData = contactsData;
- 
-  const tableColumns = [
-    { key: "avatar", description: "", visible: true },
-    { key: "firstName", description: "First Name", visible: true },
-    { key: "lastName", description: "Last Name", visible: true },
-    { key: "company", description: "Company", visible: true },
-    { key: "email", description: "Email", visible: true },
-    { key: "phone", description: "Phone", visible: true }
-  ];
-
   const [data, setData] = React.useState(tableData);
-  const [columns] = React.useState(tableColumns);
   const [activeSort, setActiveSort] = React.useState({});
   const [sort] = React.useState({
     firstName: (a, b) => stringCompare(a.firstName, b.firstName),
@@ -79,48 +58,18 @@ const ContactsManager = () => {
     //sort the tableData by certain column given the shape of arrow icon shown next to the column name
     setData(applySort(data, sort[column], nextSortOrder));
   };
-  const pageHead = (
-    <PageHead title="Contacts" className={`${styles.link}`}>
-      <Link exact to="/new">
-        <Button
-          type="primary"
-          className={`${styles.button} ${styles.override}`}
-        >
-          Add Contacts
-        </Button>
-      </Link>
-    </PageHead>
-  );
   return (
-    <Switch>
-      <Route exact path="/">
-        <StandardTemplate
-          pageHead={pageHead}
-          filterBar={
-            <SearchBar
-              onFilterChange={handleFilterChange}
-              filterText={filter}
-              label="Search Contacts"
-            ></SearchBar>
-          }
-        >
-          <ContactsList
-            sort={sort}
-            activeSort={activeSort}
-            onSort={onSort}
-            contacts={data}
-            columns={columns}
-            filter={filter}
-            filterContacts={filterContacts}
-          ></ContactsList>
-        </StandardTemplate>
-      </Route>
-      <Route exact path="/new">
-        <NewContact addNewContact={addNewContact} />
-      </Route>
-    </Switch>
+    <ContactsMasterView
+      handleFilterChange={handleFilterChange}
+      filter={filter}
+      addNewContact={addNewContact}
+      sort={sort}
+      activeSort={activeSort}
+      onSort={onSort}
+      contacts={data}
+      filterContacts={filterContacts}
+    ></ContactsMasterView>
   );
 };
-
 
 export default ContactsManager;
