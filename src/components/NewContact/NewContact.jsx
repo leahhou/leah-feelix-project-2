@@ -29,9 +29,9 @@ const NewContact = ({ addNewContact, ...props }) => {
     update[field] = input;
     setNewContact({ ...newContact, ...update });
   };
-  const mockCardHeader = <PageHead title="Details" />;
+  const formHeader = <PageHead title="Details" />;
 
-  const mockCardBody = (
+  const formBody = (
     <React.Fragment>
       <Input
         name="avatar"
@@ -41,14 +41,16 @@ const NewContact = ({ addNewContact, ...props }) => {
       />
       <Input
         name="firstName"
-        label="First Name *"
+        label="First Name"
+        requiredLabel
         errorMessage={fNameErrorMessage}
         onChange={event => handleInputChange(event, "firstName")}
         value={newContact.firstName}
       />
       <Input
         name="lastName"
-        label="Last Name *"
+        label="Last Name"
+        requiredLabel
         errorMessage={lNameErrorMessage}
         onChange={event => {
           handleInputChange(event, "lastName");
@@ -114,6 +116,7 @@ const NewContact = ({ addNewContact, ...props }) => {
               onClick={() => {
                 addNewContact(newContact);
               }}
+              disabled={newContact.firstName && newContact.lastName ? true : false}
             >
               Save
             </Button>
@@ -131,10 +134,10 @@ const NewContact = ({ addNewContact, ...props }) => {
         header={
           <Card.Header
             classes={[styles.card, styles.card__header, styles.override]}
-            child={mockCardHeader}
+            child={formHeader}
           />
         }
-        body={<Card.Body child={mockCardBody} />}
+        body={<Card.Body child={formBody} />}
       />
     </FormTemplate>
   );
