@@ -63,6 +63,24 @@ const ContactsMasterView = (
   );
 };
 
-ContactsMasterView.propTypes = {};
+ContactsMasterView.propTypes = {
+  handleFilterChange: PropTypes.func.isRequired,
+  filter: PropTypes.string.isRequired,
+  addNewContact: PropTypes.func.isRequired,
+  sort: PropTypes.object.isRequired,
+  activeSort: PropTypes.func.isRequired,
+  onSort: PropTypes.func.isRequired,
+  filterContacts: PropTypes.func.isRequired,
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      firstName: PropTypes.string.isRequired,
+      lastName: PropTypes.string.isRequired,
+      company: PropTypes.string,
+      phone: PropTypes.string,
+      email: PropTypes.string
+    })
+  ).isRequired
+};
 
 export default ContactsMasterView;
