@@ -1,13 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "./ContactsMasterView.module.css";
-import { StandardTemplate, Button, PageHead } from "@myob/myob-widgets";
-import { Link } from "react-router-dom";
-import { Switch, Route } from "react-router-dom";
+import { StandardTemplate, Button, PageHead} from "@myob/myob-widgets";
+import { Switch, Route, Link } from "react-router-dom";
 import SearchBar from "./../SearchBar/SearchBar";
 import NewContact from "./../NewContact/NewContact";
 import ContactsList from "./../ContactsList/ContactsList";
-
+import NotFound from "./../NotFound/NotFound";
 const ContactsMasterView = (
   {
     handleFilterChange,
@@ -59,6 +58,7 @@ const ContactsMasterView = (
       <Route exact path="/new">
         <NewContact addNewContact={addNewContact} />
       </Route>
+      <Route path="*" extract={true} component={NotFound}></Route>
     </Switch>
   );
 };
