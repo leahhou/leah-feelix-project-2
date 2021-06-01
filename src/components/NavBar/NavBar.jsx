@@ -1,33 +1,38 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styles from "./NavBar.module.css";
 import { Navigation, MYOBLogo } from "@myob/myob-widgets";
 
-const NavBar = props => {
+const NavBar = (navs, ...props) => {
   const brand = (
     <Navigation.Brand url="/" width="73px">
       <MYOBLogo />
     </Navigation.Brand>
   );
-
-
+  const {key:key1, label:label1, url:url1} = navs.navs[0];
+  const {key:key2, label:label2, url:url2, onSelect} = navs.navs[1];
   const primary = [
-    <Navigation.Link key="home" label="Contacts" url="/"  className={`${styles.nav} ${styles.override}`}/>,
-    <Navigation.Link key="" url="/new" onSelect={() => "selected"} label="Create Contact" className={`${styles.nav} ${styles.override}`}/>
+    <Navigation.Link active key={key1} label={label1} url={url1}/>,
+    <Navigation.Link
+    key={key2} label={label2} url={url2} onSelect={onSelect}
+    />
   ];
-
 
   return (
     <>
-      <Navigation
-        fluid
-        brand={brand}
-        primary={primary}
-      />
+      <Navigation fluid brand={brand} primary={primary} />
     </>
   );
 };
 
-Navigation.propTypes = {};
+Navigation.propTypes = {
+  navs: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+      onSelect: PropTypes.func
+    })
+  )
+};
 
 export default NavBar;

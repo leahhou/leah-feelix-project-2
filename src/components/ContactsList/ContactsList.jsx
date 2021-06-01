@@ -1,14 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "./ContactsList.module.css";
-import {
-  Avatar,
-  UserAvatar,
-  Table,
-  HeaderSort
-} from "@myob/myob-widgets";
+import { Avatar, Table, HeaderSort } from "@myob/myob-widgets";
 
-const ContactsList = ({contacts, columns, filterContacts, filter, sort, activeSort, onSort}) => {
+const ContactsList = ({
+  contacts,
+  filterContacts,
+  filter,
+  sort,
+  activeSort,
+  onSort
+}) => {
+
+  const contactsTableColumn = [
+    { key: "avatar", description: "", visible: true },
+    { key: "firstName", description: "First Name", visible: true },
+    { key: "lastName", description: "Last Name", visible: true },
+    { key: "company", description: "Company", visible: true },
+    { key: "email", description: "Email", visible: true },
+    { key: "phone", description: "Phone", visible: true }
+  ];
 
   const customiseTableWidth = (columnKey = null) => {
     if (columnKey === "avatar") {
@@ -23,7 +34,7 @@ const ContactsList = ({contacts, columns, filterContacts, filter, sort, activeSo
 
   const renderHeader = () => (
     <Table.Header>
-      {columns.map(c => (
+      {contactsTableColumn.map(c => (
         <Table.HeaderItem
           key={c.key}
           width={customiseTableWidth(c.key)}
@@ -54,7 +65,12 @@ const ContactsList = ({contacts, columns, filterContacts, filter, sort, activeSo
         width={customiseTableWidth("avatar")}
         className={styles.table__cell__avatar}
       >
-        {d.avatar}
+        <Avatar
+          type="user"
+          name={d.firstName.concat(" ", d.lastName)}
+          imageSource={d.avatar}
+          color="regal"
+        />
       </Table.RowItem>
       <Table.RowItem columnName="First Name" width={customiseTableWidth()}>
         {d.firstName}
@@ -77,36 +93,38 @@ const ContactsList = ({contacts, columns, filterContacts, filter, sort, activeSo
       </Table.RowItem>
     </Table.Row>
   );
-  
-  const filtedContacts = filterContacts(filter, contacts)
+
+  const filtedContacts = filterContacts(filter, contacts);
 
   return (
-      <Table>
-        {renderHeader()}
-         <Table.Body>{filtedContacts.map(renderRow)}</Table.Body>
-      </Table>
-
+    <Table>
+      {renderHeader()}
+      <Table.Body>{filtedContacts.map(renderRow)}</Table.Body>
+    </Table>
   );
 };
 
 ContactsList.propTypes = {
-  contacts: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    avatar: PropTypes.instanceOf(UserAvatar || Avatar),
-    firstName: PropTypes.string.isRequired,
-    lastName: PropTypes.string.isRequired,
-    company: PropTypes.string,
-    phone: PropTypes.string,
-    email: PropTypes.string,
-  })).isRequired,
-  columns: PropTypes.arrayOf(PropTypes.shape({
-    key: PropTypes.string,
-    description: PropTypes.string,
-    visible: PropTypes.bool
-  })).isRequired,
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      avatar: PropTypes.instanceOf(Avatar),
+      firstName: PropTypes.string.isRequired,
+      lastName: PropTypes.string.isRequired,
+      company: PropTypes.string,
+      phone: PropTypes.string,
+      email: PropTypes.string
+    })
+  ).isRequired,
+  contactsTableColumn: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string,
+      description: PropTypes.string,
+      visible: PropTypes.bool
+    })
+  ).isRequired
 };
 
-ContactsList.defaultProps = {
-};
+ContactsList.defaultProps = {};
 
 export default ContactsList;
